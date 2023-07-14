@@ -19,7 +19,7 @@ label MI_MOD_ARSENA_1_DAY_1_IKARUS:
     nl"Ага!"
     pause(2)
     ns"Вот оно!{w}, осталось чуть-чуть."
-    stop music beg_night_les fadeout 3
+    stop music fadeout 3
     play music fadein 4
     play sound fadein 4
     pause(5)
