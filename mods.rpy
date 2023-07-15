@@ -3,6 +3,15 @@ init:
 
     $ ns = Character (u'???', color="#ffeb38", what_color="FFFFFF")
     $ nl = Character (u'???', color="#af38ff", what_color="FFFFFF")
+    $ bd = Character (u'Бездомный', color="#8d4b1f", what_color="FFFFFF")
+
+
+    screen MyScreenModArsenaDay1:
+        imagemap:
+            auto "mods/BL_VS_MIMOD/img/maps1_%s.png"
+            hotspot(190, 5, 93, 48) action Jump("")
+            hotspot(2, 142, 75, 132) action Jump("")
+            hotspot(185, 80, 110, 200) action Jump("")
 
 
     $ beg_night_les = "mods/BL_VS_MIMOD/music/beg_night_les.mp3"
@@ -18,21 +27,35 @@ init:
     $ dengi = "false"
     $ dosirak = "false"
     $ bumaga_and_ruchka = "false"
+    $ vitamini = "false"
+    $ konveti = "false"
+    $ sumka_dla_vtoroi_obufi = "false"
+    $ komp_perv_med_help = "false"
+    $ nabor_arduino_min_disp = "false"
+    $ book_territoria = "false"
+    $ neilonvie_struni = "false"
 
     $ lekarstfo_ot_angin = "false"
     $ lekarstfo_ot_prostudi = "false"
     $ lekarstfo_perekis_vodoroda = "false"
+    $ is_magaz = "false"
 
 
     $ pos1 = "false"
     $ inpos1 = ""
     $ pos2 = "false"
     $ inpos2 = ""
+    $ pos3 = "false"
+    $ inpos3 = ""
+    $ pos4 = "true"
+    $ inpos4 = ""
 
+    $ is_dop_invent = "false"
     $ is_all_lekarstva = 0
     $ is_all_lekarstva_otvet = ""
+    $ is_dvor_Arsen_day_1 = "false"
 
-
+    $ Money = 0
 
 label MI_MOD_ARSENA_1_DAY_1_IKARUS:
     play music beg_night_les fadein 3
@@ -59,6 +82,7 @@ label MI_MOD_ARSENA_1_DAY_1_IKARUS:
     th"я начал избекать {w}Икарусов...{w} особенно с номерои 410!"
     th"Но если я не садился в Икарус то я попадал в лагерь когда засыпал."
     th"А самое главное в лагере нечего не меняется{w}, даже пионеры!"
+    th"Ну ладно пионеры, даже  {b}Я{/b}!"
     th"А я ведь хотел стать врачом..."
     th"Если сказать кому нибуть это, то восьмая бригада сразу выедит."
     th"И так{w} сегодня тот самый день"
@@ -102,6 +126,7 @@ menu:
         else:
             $ dengi = "true"
             $ predmet += 1
+            $ Money += 300
             if pos1 == "false":
                 $ inpos1 = "Деньги"
                 $ pos1 = "true"
@@ -191,7 +216,7 @@ menu:
 
 label Im_Yzu_Eto_Vzal_Mod_Arsena_Day_1:
     scene semen_room
-    th"я это уже взял"
+    th"Я это уже взял."
     jump menu_fibora_Day_1_Mod_Arsena
 
 
@@ -205,9 +230,9 @@ label Add_Predmet_Mod_Arsena_day_1:
         th"Ммм... {w} может ещё что-то взять?"
         jump menu_fibora_Day_1_Mod_Arsena
     else: 
-        th"Больше в корманы не влезает"
-        th"Ммм... пожалуй [inpos1] и [inpos2] полезные [is_all_lekarstva_otvet]"
-        th"пора идти"
+        th"Больше в корманы не влезает."
+        th"Ммм... пожалуй [inpos1] и [inpos2] полезные [is_all_lekarstva_otvet]."
+        th"Пора идти."
         "Я направился к выходу из дома."
         play sound sfx_open_door_clubs_2
     hide semen_room with dissolve
@@ -220,22 +245,253 @@ label Idu_Na_Ylicu_Mod_Arsena_Day_1:
     play music music_list["eternal_longing"] fadein 3
     th"..."
     th"Ну вот я уже у автобусной остановки где меня будет ждать неменуемая судьба."
-    "Подошол к автобусной останоке"
+    "Подошол к автобусной останоке."
     me"И ты тоже не меняешся..."
-    "сказал я с ухмылкой"
+    "Сказал я с ухмылкой."
     th"Хотя если приглядется то есть небольшие отличая {w} например слегка расшатаная лавочка{w}, облезлая краска{w} и чуть скосившая крыша."
     th"Может в магазин заглянуть пока есть возможность?"
-    "Я направился в сторону магазинчика"
-    hide bus_stop
-    stop fadeout 2
+    "Я направился в сторону магазинчика."
+    scene magazin with dissolve
+    $ is_magaz = "true"
+    th"Таак..."
+    "я порылся в своих карманах"
+    if inpos1 == "Деньги":
+        th"У меня есть 100р и ещё 300р которые я взял дома."
+        $ Money += 100
+    elif inpos2 == "Деньги":
+        th"У меня есть 100р и ещё 300р которые я взял дома."
+        $ Money += 100
+    else:
+        th"У меня с собой только 100р."
+        th"Что-же можно мне купить на них."
+        $ Money = 100
+    "Я огляделся."
+    th"Людей с утра очень мало."
+    th"Вернее{w} совсем нет."
+    "Я рассмотрел товар."
 
-    
+label MI_MOD_ARSENA_2_DAY_1_IKARUS:
+if is_magaz == "false":
+    scene magazin with dissolve
+menu:
+    "[Money]р"
+    "Витомины - 50р":
+        if Money - 50 > 0:
+            if vitamini == "false":
+                if pos3 == "false":
+                    th"Ели как уместил их в корманы."
+                    th"Заболеть мне ещё непомешало!"
+                    th"Лучше уш плавать на речке{w} чем жариться в постеле."
+                    $ inpos3 = "витомины"
+                    $ pos3 = "true"
+                    $ Money -= 50
+                elif pos4 == "false":
+                    th"Ели как уместил их в корманы."
+                    th"Заболеть мне ещё непомешало!"
+                    th"Лучше уш плавать на речке{w} чем жариться в постеле."
+                    $ inpos3 = "витомины"
+                    $ pos3 = "true"
+                    $ Money -= 50
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
+        else:
+            th"Мне не хватает денег."
+    "Конфеты - 100р":
+        if Money - 100 > 0:
+            if konveti == "false":
+                if pos3 == "false":
+                    th"Ели как уместил их в корманы."
+                    th"Надеюсь конфеты хоть както скрасят моё пробывание в лагере."
+                    $ inpos3 = "Конфеты"
+                    $ pos3 = "true"
+                    $ Money -= 100
+                elif pos4 == "false":
+                    th"Ели как уместил их в корманы."
+                    th"Надеюсь конфеты хоть както скрасят моё пробывание в лагере."
+                    $ inpos3 = "Конфеты"
+                    $ pos3 = "true"
+                    $ Money -= 100
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
+        else:
+            th"Мне не хватает денег."
+    "Сумока для второй обуви - 200р":
+        if Money - 200 > 0:
+            if sumka_dla_vtoroi_obufi == "false":
+                th"Теперь у меня больше места."
+                $ inpos3 = "Сумока для второй обуви"
+                $ pos3 = "true"
+                $ Money -= 200
+                $ pos4 = "false"
+                $ is_dop_invent = "true"
+            else:
+                th"У меня уже есть сумка."
+        else:
+            th"Мне не хватает денег."
+    "Комплект первой мед помощи - 200р":
+        if Money - 200 > 0:
+            if komp_perv_med_help == "false":
+                if pos3 == "false":
+                    th"Лишнем точно не будет!"
+                    th"Придётся в руках нести."
+                    $ inpos3 = "Конфеты"
+                    $ pos3 = "true"
+                    $ Money -=200
+                elif pos4 == "false":
+                    th"Лишнем точно не будет!"
+                    th"Придётся в руках нести."
+                    $ inpos3 = "Конфеты"
+                    $ pos3 = "true"
+                    $ Money -=200
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
+        else:
+            th"Мне не хватает денег."
+    "Набор Arduino с миниатюр. дисплеем - 400р":
+        if Money - 50 > 0:
+            if nabor_arduino_min_disp == "false":
+                if pos3 == "false":
+                    th"Придётся в руках нести."
+                    th"Может вкоем то веке запишусь в кружок электроники."
+                    $ inpos3 = "Набор Arduino с миниатюр. дисплеем"
+                    $ pos3 = "true"
+                elif pos4 == "false":
+                    th"Придётся в руках нести."
+                    th"Может вкоем то веке запишусь в кружок электроники."
+                    $ inpos3 = "Набор Arduino с миниатюр. дисплеем"
+                    $ pos3 = "true"
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
+        else:
+                th"Мне не хватает денег."
+    "Книга \"Территория\" - 200р":
+        if Money - 200 > 0:
+            if book_territoria == "false":
+                if pos3 == "false":
+                    th"Придётся в руках нести."
+                    th"Можно хоть книгу почитать."
+                    $ inpos3 = "Книга \"Территория\""
+                    $ pos3 = "true"
+                    $ Money -= 200
+                elif pos4 == "false":
+                    th"Придётся в руках нести."
+                    th"Можно хоть книгу почитать."
+                    $ inpos3 = "Книга \"Территория\""
+                    $ pos3 = "true"
+                    $ Money -= 200
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
 
-    
+        else:
+            th"Мне не хватает денег."
+    "нейлоновые струны - 200р":
+        if Money - 200 > 0:
+            if book_territoria == "false":
+                if pos3 == "false":
+                    th"Струны от которых мазолей на пальцах не будут."
+                    th"Может я там и играть научусь?"
+                    th"Ели как уместил их в корманы."
+                    $ inpos3 = "нейлоновые струны"
+                    $ pos3 = "true"
+                    $ Money -= 200
+                elif pos4 == "false":
+                    th"Ели как уместил их в корманы."
+                    $ inpos3 = "нейлоновые струны"
+                    $ pos3 = "true"
+                    $ Money -= 200
+                else:
+                    th"у меня карманы забиты битком."
+            else:
+                th"Я это уже взял."
+        else:
+            th"Мне не хватает денег."
+
+    "Водка - 200р":
+        th"Мне нет 18-ти"
+        th"Но душевно мне уже больше 18-ти лет"
+    "Выйти из магазина":
+        jump ylica_Ikarus_magazin
 
 
+label ylica_Ikarus_magazin_Mod_Arsena_Day_1:
+    th"Думаю я там закончил."
+    th"Куда-же мне теперь пойти?"
+    show screen MyScreenModArsenaDay1
+    pause(hard=true)
 
-    
+label ylica_Ikarus_Dvor_Mod_Arsena_Day_1:
+if is_dvor_Arsen_day_1 == "true":
+    th"мне там делать нечего"
+else:
+    th"Ну делать мне всё равно нечего."
+    th"Пойду прогуляюсь"
+    scene
+    pause(1)
+    th"Рядом с мусоркой на картонке волялся бездомный."
+    bd"Парень пожалуйста дай денег сколько не жалко."
+menu:
+    "Дать денег":
+        if Money >= 50:
+            me"Хорошо я дам тебе денег."
+            if Money >= 250
+            if pos1 == "false":
+                me"Но просто так я тебе их не дам."
+                me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
+                bd"5 секунд."
+                th"Там от скуки и помереть охота."
+                th"С этим мне точно скучно не будет."
+                bd"Вот держи"
+                me"Спасибо"
+                "Я торопливо покинул двор."
+                $ pos1 = "true"
+                $ inpos1 = "водка"
+            elif pos2 == "false":
+                me"Но просто так я тебе их не дам."
+                me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
+                bd"5 секунд."
+                th"Там от скуки и помереть охота."
+                th"С этим мне точно скучно не будет."
+                bd"Вот держи"
+                me"Спасибо"
+                "Я торопливо покинул двор."
+                $ pos2 = "true"
+                $ inpos2 = "водка"
+            elif pos3 == "false":
+                me"Но просто так я тебе их не дам."
+                me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
+                bd"5 секунд."
+                th"Там от скуки и помереть охота."
+                th"С этим мне точно скучно не будет."
+                bd"Вот держи"
+                me"Спасибо"
+                "Я торопливо покинул двор."
+                $ pos3 = "true"
+                $ inpos3 = "водка"
+            elif pos4 == "false":
+                me"Но просто так я тебе их не дам."
+                me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
+                bd"5 секунд."
+                th"Там от скуки и помереть охота."
+                th"С этим мне точно скучно не будет."
+                bd"Вот держи"
+                me"Спасибо"
+                "Я торопливо покинул двор."
+                $ pos4 = "true"
+                $ inpos4 = "водка"
+        else:
+            me"Прости но у меня нет денег."
+    "Недовать денег":
+        me"Ещё чего! Возьми и заработай."
+        "Я торопливо покинул двор."
+
         
-
-    
