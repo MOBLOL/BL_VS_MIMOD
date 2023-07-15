@@ -546,3 +546,4 @@ label ylica_Ikarus_avtobus_Mod_Arsena_Day_1:
     th"Пойду я пожалуй на остановку."
     th"Делать всёравно нечего."
     scene bus_stop with dissolve
+    
