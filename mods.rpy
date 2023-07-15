@@ -455,6 +455,7 @@ menu:
                 "Я торопливо покинул двор."
                 $ pos1 = "true"
                 $ inpos1 = "водка"
+                jump ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1
             elif pos2 == "false":
                 me"Но просто так я тебе их не дам."
                 me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
@@ -466,6 +467,7 @@ menu:
                 "Я торопливо покинул двор."
                 $ pos2 = "true"
                 $ inpos2 = "водка"
+                jump ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1
             elif pos3 == "false":
                 me"Но просто так я тебе их не дам."
                 me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
@@ -477,6 +479,7 @@ menu:
                 "Я торопливо покинул двор."
                 $ pos3 = "true"
                 $ inpos3 = "водка"
+                jump ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1
             elif pos4 == "false":
                 me"Но просто так я тебе их не дам."
                 me"Если пойдёш и купиш \"Водку\" то я тебе дам 50р."
@@ -488,10 +491,21 @@ menu:
                 "Я торопливо покинул двор."
                 $ pos4 = "true"
                 $ inpos4 = "водка"
+                jump ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1
         else:
             me"Прости но у меня нет денег."
+            "Я неторопливо покинул двор."
+            jump ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1
     "Недовать денег":
         me"Ещё чего! Возьми и заработай."
         "Я торопливо покинул двор."
 
-        
+label ylica_Ikarus_MagazDvor_Mod_Arsena_Day_1:
+    th"И так..."
+    th"У меня ещё есть время."
+    th"Может к остановки уже пойти?"
+    pause(hard=true)
+
+label ylica_Ikarus_avtobus_Mod_Arsena_Day_1:
+    th"Пойду я пожалуй на остановку."
+    th"Делать всёравно нечего."
